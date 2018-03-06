@@ -23,6 +23,28 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import PiPilotApp from './components/PiPilotApp';
 import registerServiceWorker from './registerServiceWorker';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
 
-ReactDOM.render(<PiPilotApp />, document.getElementById('root'));
+import { backendReducer } from './reducers/backend';
+
+//------------------------------------------------------------------------------
+// Redux store
+//------------------------------------------------------------------------------
+export const store = createStore(
+  combineReducers({
+    backend: backendReducer
+  }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+//------------------------------------------------------------------------------
+// The App component
+//------------------------------------------------------------------------------
+ReactDOM.render(
+  <Provider store={store}>
+      <PiPilotApp />
+  </Provider>,
+  document.getElementById('root'));
+
 registerServiceWorker();
