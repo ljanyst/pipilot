@@ -20,11 +20,13 @@
 
 import React, { Component } from 'react';
 
+import BackendStatus from './BackendStatus';
+
 class PiPilotApp extends Component {
   render() {
     return (
-      <div>
-        Hello world!
+      <div className='app-wrapper'>
+        <BackendStatus />
       </div>
     );
   }
