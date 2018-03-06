@@ -7,3 +7,7 @@ body {
 .app-wrapper {
     padding: 1em;
 }
+
+.alert-content {
+    text-align: center;
+}
