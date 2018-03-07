@@ -18,6 +18,8 @@
 # along with PiPilot.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
+import json
+
 from autobahn.twisted.websocket import WebSocketServerProtocol
 from autobahn.twisted.websocket import WebSocketServerFactory
 from twisted.logger import Logger
@@ -80,7 +82,7 @@ class WSProtocol(WebSocketServerProtocol):
                 self.wslog.debug(msg)
                 return
 
-        if data['type'] != 'ACTION':
+        if data['type'] != 'ACTION_NO_RESP':
             msg = 'Rejecting non-action message: {}.'.format(data['type'])
             self.wslog.debug(msg)
             self.send_error_response(data['id'], msg)
@@ -117,6 +119,6 @@ class WSProtocol(WebSocketServerProtocol):
             return
 
         try:
-            self.controller.updateChannel(data['channel'], data['value'])
+            self.controller.update_channel(data['channel'], data['value'])
         except Exception as e:
             pass
