@@ -11,3 +11,37 @@ body {
 .alert-content {
     text-align: center;
 }
+
+table.ac {
+    width: 100%;
+    table-layout: fixed;
+}
+
+td.ac {
+    border: 1px solid SteelBlue;
+    width: 25%;
+    padding: 2em;
+}
+
+.ac-content {
+    height: 250px;
+    text-align: center;
+}
+
+.ac-content-box {
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+    width: 20px;
+}
+
+th.ac {
+    border: 1px solid SteelBlue;
+    background: SteelBlue;
+    color: SandyBrown;
+    text-align: center;
+}
+
+div.ac {
+    padding: 2em;
+}
