@@ -18,10 +18,12 @@
 # along with PiPilot.  If not, see <http://www.gnu.org/licenses/>.
 #-------------------------------------------------------------------------------
 
+import serial
+
 from twisted.application.service import Service
 from twisted.internet.task import LoopingCall
 from twisted.logger import Logger
-
+from .sbus import SBUSEncoder
 
 #-------------------------------------------------------------------------------
 class Controller(Service):
@@ -34,7 +36,15 @@ class Controller(Service):
         #-----------------------------------------------------------------------
         self.log.info('Creating controller')
         self.config = config
-        ps = config.get_string('pipilot', 'sbus-uart-tty')
+        tty_file = config.get_string('pipilot', 'sbus-uart-tty')
+
+        #-----------------------------------------------------------------------
+        # Set up the SBUS encoder and open the serial port
+        #-----------------------------------------------------------------------
+        self.encoder = SBUSEncoder()
+        self.port = serial.Serial(tty_file, baudrate=100000,
+                                  parity=serial.PARITY_EVEN,
+                                  stopbits=serial.STOPBITS_TWO)
 
         #-----------------------------------------------------------------------
         # Set up the service
@@ -45,7 +55,7 @@ class Controller(Service):
     #---------------------------------------------------------------------------
     def startService(self):
         self.log.info('Starting controller')
-        self.sbus_loop.start(0.01)
+        self.sbus_loop.start(0.07)
 
     #---------------------------------------------------------------------------
     def stopService(self):
@@ -54,4 +64,10 @@ class Controller(Service):
 
     #---------------------------------------------------------------------------
     def send_sbus_msg(self):
-        pass
+        self.port.write(self.encoder.get_data())
+
+    #---------------------------------------------------------------------------
+    def update_channel(self, channel, value):
+        scale = value + 100.
+        scale /= 200
+        self.encoder.set_channel(channel, int(scale * 2047))
