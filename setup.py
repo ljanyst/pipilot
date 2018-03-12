@@ -55,7 +55,7 @@ class build_ui(build_py):
             #-------------------------------------------------------------------
             # Check and set the environment up
             #-------------------------------------------------------------------
-            target_dir = os.path.join(self.build_lib, 'scrapy_do', 'ui')
+            target_dir = os.path.join(self.build_lib, 'PiPilot', 'ui')
 
             if os.path.exists(target_dir):
                 rmtree(target_dir)
