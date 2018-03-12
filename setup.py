@@ -126,7 +126,7 @@ setup(
     version = __version__,
     author = 'Lukasz Janyst',
     author_email = 'xyz@jany.st',
-    url = 'https://jany.st/pipilot.html',
+    url = 'https://github.com/ljanyst/pipilot',
     description = 'A software aircraft controller for RaspberryPi',
     long_description = long_description,
     license = 'GPL3 license',
